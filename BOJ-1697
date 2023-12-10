@@ -50,3 +50,4 @@ int main()
     
     return 0;
 }
+// cur의 범위를 조건으로 달지 않아 outofbounds 오류가 발생한걸 기억하자!
