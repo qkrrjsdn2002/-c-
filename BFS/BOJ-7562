@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+int main()
+{
+    int T;
+    int dx[8] = {-1,-1,-2,-2,2,2,1,1};
+    int dy[8] = {-2,2,-1,1,-1,1,-2,2};
+    
+    cin >> T;
+    
+    for(int i=0; i<T; i++)
+    {
+        int I, j, k, J, K;
+        int visited[301][301] = {0,};
+        queue <pair<int,int>> q;
+        
+        cin >> I >> j >> k >> J >> K;
+        if(j ==J && k == K)
+        {
+            cout << 0 << "\n";
+            continue;
+        }
+        q.push({j,k});
+        while(!q.empty())
+        {
+            pair<int,int> cur = q.front();
+            q.pop();
+            for(int dir=0; dir<8; dir++)
+            {
+                int curx = cur.first + dx[dir];
+                int cury = cur.second + dy[dir];
+                if(curx < 0 || cury < 0 || curx >= I || cury >= I) continue;
+                if(visited[curx][cury] != 0) continue;
+                visited[curx][cury] = visited[cur.first][cur.second] + 1;
+                q.push({curx,cury});
+            }
+        }
+        cout << visited[J][K] << "\n";
+    }
+    return 0;
+}
