@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <cstring>
+
+using namespace std;
+
+int main()
+{
+    int N, M, x, y;
+    int visited[101] = {-1,};
+    int moving[101] = {0,};
+    queue <int> q;
+    memset(visited, -1, sizeof(visited));
+    
+    cin >> N >> M;
+    
+    for(int i=0; i<N+M; i++)
+    {
+        cin >> x >> y;
+        moving[x] = y;
+    }
+    
+    visited[1] = 0;
+    q.push(1);
+    
+    while(!q.empty())
+    {
+        int cur = q.front();
+        q.pop();
+        for(int dir=1; dir<=6; dir++)
+        {
+            int curr = cur + dir;
+            if(curr <= 0 || curr > 100) continue;
+            if(moving[curr] !=0) curr = moving[curr];
+            if(visited[curr] == -1)
+            {
+                visited[curr] = visited[cur] + 1;
+                q.push(curr);
+            }
+        }
+    }
+    
+    cout << visited[100];
+    
+    return 0;
+}
