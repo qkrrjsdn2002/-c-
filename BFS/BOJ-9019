@@ -1,0 +1,72 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int T, A, B;
+    
+    cin >> T;
+    
+    for(int i=0; i<T; i++)
+    {
+        bool visit[10001] = {0,};
+        
+        cin >> A >> B;
+        
+        queue <pair<int,string>> q;
+        
+        q.push({A,""});
+        visit[A] = true;
+            
+        while(!q.empty())
+        {
+            int tmp = q.front().first;
+            string inst = q.front().second;
+            q.pop();
+            
+            if(tmp == B)
+            {
+                cout << inst << "\n";
+                break;
+            }
+            
+            int next = tmp * 2;
+            if(next > 9999) next = next % 10000;
+            if(!visit[next])
+            {
+                visit[next] = true;
+                q.push({next,inst+"D"});
+            }
+
+            next = tmp - 1;
+            if(next == -1) next = 9999;
+            if(!visit[next])
+            {
+                visit[next] = true;
+                q.push({next,inst+"S"});
+            }
+            
+            next = ((tmp%1000)*10) + tmp / 1000;
+            if(!visit[next])
+            {
+                visit[next] = true;
+                q.push({next,inst+"L"});;
+            }
+            
+            next = ((tmp%10)*1000) + tmp / 10;
+            if(!visit[next])
+            {
+                visit[next] = true;
+                q.push({next,inst+"R"});
+            }
+        }
+    }
+        return 0;
+}
