@@ -1,0 +1,69 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+    int N, num = 0;
+    int dx[4] = {0,0,-1,1};
+    int dy[4] = {-1,1,0,0};
+    int home[30][30];
+    int home_cnt[1000];
+    bool visited[30][30];
+    string tmp;
+    
+    cin >> N;
+    
+    for(int i=0; i<N; i++)
+    {
+        cin >> tmp;
+        for(int j=0; j<N; j++)
+        {
+            home[i][j] = tmp[j] - '0';
+        }
+    }
+    
+    for(int i=0; i<N; i++)
+    {
+        for(int j=0; j<N; j++)
+        {
+            if(visited[i][j] || home[i][j] == 0) continue;
+            num++;
+            queue <pair<int,int>> q;
+            q.push({i,j});
+            visited[i][j] = true;
+            int size = 0;
+            while(!q.empty())
+            {
+                size++;
+                pair <int,int> cur = q.front();
+                q.pop();
+                for(int dir=0; dir<4; dir++)
+                {
+                    int curx = cur.first + dx[dir];
+                    int cury = cur.second + dy[dir];
+                    if(curx < 0 || cury < 0 || curx >= N || cury >= N) continue;
+                    if(visited[curx][cury] || home[curx][cury] == 0) continue;
+                    visited[curx][cury] = true;
+                    q.push({curx,cury});
+                }
+            }
+            home_cnt[num-1] = size;
+        }
+    }
+    
+    cout << num << "\n";
+    
+    sort(home_cnt,home_cnt+num);
+    
+    for(int i=0; i<num; i++)
+    {
+        cout << home_cnt[i] << "\n";
+    }
+    
+    return 0;
+}
